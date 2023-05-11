@@ -1,24 +1,44 @@
 ﻿@page
-@model SupermarketWEB.Pages.PayModes.CreateModel
+@model SupermarketWEB.Pages.Providers.CreateModel
 @{
 	ViewData["Title"] = "Create";
 }
 <h1>Create</h1>
-<h4>PayMode</h4>
+<h4>Provider</h4>
 <hr />
 <div class ="row">
 	<div class = "col-md-4">
 		<form method= "post">
 			<div asp-validation-summary="ModelOnly" class = "text-danger"></div>
-			<div class = "from group">
-				<label asp-for="PayMode.Name" class="control-label" ></label>
-				<input asp-for="PayMode.Name" class="form.control"/>
-				<span asp-validation-for="PayMode.Name" class="text-danger"></span>
+				<div class = "from group">
+				<label asp-for="Provider.Document_Number" class="control-label" ></label>
+				<input asp-for="Provider.Document_Number" class="form.control"/>
+				<span asp-validation-for="Provider.Document_Number" class="text-danger"></span>
 			</div>
 			<div class = "from group">
-				<label asp-for="PayMode.Observation" class="control-label" ></label>
-				<input asp-for="PayMode.Observation" class="form.control"/>
-				<span asp-validation-for="PayMode.Observation" class="text-danger"></span>
+				<label asp-for="Provider.First_Name" class="control-label" ></label>
+				<input asp-for="Provider.First_Name" class="form.control"/>
+				<span asp-validation-for="Provider.First_Name" class="text-danger"></span>
+			</div>
+			<div class = "from group">
+				<label asp-for="Provider.Last_Name" class="control-label" ></label>
+				<input asp-for="Provider.Last_Name" class="form.control"/>
+				<span asp-validation-for="Provider.Last_Name" class="text-danger"></span>
+			</div>
+			<div class = "from group">
+				<label asp-for="Provider.Phone" class="control-label" ></label>
+				<input asp-for="Provider.Phone" class="form.control"/>
+				<span asp-validation-for="Provider.Phone" class="text-danger"></span>
+			</div>
+			<div class = "from group">
+				<label asp-for="Provider.Email" class="control-label" ></label>
+				<input asp-for="Provider.Email" class="form.control"/>
+				<span asp-validation-for="Provider.Email" class="text-danger"></span>
+			</div>
+				<div class = "from group">
+				<label asp-for="Provider.Birhtday" class="control-label" ></label>
+				<input asp-for="Provider.Birhtday" class="form.control"/>
+				<span asp-validation-for="Provider.Birhtday" class="text-danger"></span>
 			</div>
 			<div class="from-group  mt-3">
 				<input type="submit" value="Create" class="btn btn-success"/>

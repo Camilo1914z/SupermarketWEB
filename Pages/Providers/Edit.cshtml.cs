@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SupermarketWEB.Data;
 using SupermarketWEB.Models;
 
-namespace SupermarketWEB.Pages.PayModes
+namespace SupermarketWEB.Pages.Providers
 {
     public class EditModel : PageModel
     {
@@ -16,23 +16,23 @@ namespace SupermarketWEB.Pages.PayModes
 		}
 
 		[BindProperty]
-		public PayMode PayMode { get; set; } = default!;
+		public Provider Provider { get; set; } = default!;
 
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
 
-			if (id == null || _context.PayModes==null)
+			if (id == null || _context.Providers==null)
 			{
 				return NotFound();
 			}
 
-			var payMode =await _context.PayModes.FirstOrDefaultAsync(m=> m.Id == id);
+			var provider =await _context.Providers.FirstOrDefaultAsync(m=> m.Id == id);
 
-			if (payMode == null)
+			if (provider == null)
 			{
 				return NotFound();
 			}
-			PayMode = payMode;
+			Provider = provider;
 			return Page();
 		}
 
@@ -41,7 +41,7 @@ namespace SupermarketWEB.Pages.PayModes
 			if (!ModelState.IsValid) {
 				return Page();
 			}
-			_context.Attach(PayMode).State = EntityState.Modified;
+			_context.Attach(Provider).State = EntityState.Modified;
 
 			try
 			{
@@ -49,7 +49,7 @@ namespace SupermarketWEB.Pages.PayModes
 				await _context.SaveChangesAsync();
 			}
 			catch (DbUpdateConcurrencyException){
-				if (!PayModeExists(PayMode.Id))
+				if (!ProviderExists(Provider.Id))
 				{
 					return NotFound();
 				}
@@ -62,10 +62,10 @@ namespace SupermarketWEB.Pages.PayModes
 
 		}
 
-		private bool PayModeExists(int id)
+		private bool ProviderExists(int id)
 		{
 
-			return (_context.PayModes?.Any(a => a.Id == id)).GetValueOrDefault();
+			return (_context.Providers?.Any(a => a.Id == id)).GetValueOrDefault();
 		}
 	}
 	}

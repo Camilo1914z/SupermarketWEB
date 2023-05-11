@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Document_Number { get; set; }
-        public string Frist_Name { get; set; }
+        public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

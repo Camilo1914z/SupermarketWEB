@@ -5,7 +5,7 @@ using SupermarketWEB.Data;
 using SupermarketWEB.Models;
 
 
-namespace SupermarketWEB.Pages.PayModes
+namespace SupermarketWEB.Pages.Providers
 {
     public class CreateModel : PageModel
     {
@@ -23,14 +23,14 @@ namespace SupermarketWEB.Pages.PayModes
 
         [BindProperty]
 
-        public PayMode PayMode { get; set; } = default!;
+        public Provider Provider { get; set; } = default!;
         public async Task<IActionResult> OnPostAsync() 
         {
-            if (!ModelState.IsValid || _context.PayModes == null || PayMode==null) { 
+            if (!ModelState.IsValid || _context.Providers == null || Provider==null) { 
             
             return Page();
             }
-            _context.PayModes.Add(PayMode);
+            _context.Providers.Add(Provider);
             await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         
