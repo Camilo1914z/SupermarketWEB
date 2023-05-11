@@ -13,9 +13,11 @@ namespace SupermarketWEB.Models
         public int Stock { get; set; }
         public int CategoryId { get; set; }
         public ICollection<Category>? categories { get; set; }
-        
+       
 
-        
+
+
+
 
 
     }
