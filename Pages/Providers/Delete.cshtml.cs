@@ -26,15 +26,15 @@ namespace SupermarketWEB.Pages.Providers
 
                 return NotFound();
             }
-            var Provider = await _context.Providers.FirstOrDefaultAsync(m => m.Id == id);
-            if (Provider == null)
+            var provider = await _context.Providers.FirstOrDefaultAsync(m => m.Id == id);
+            if (provider == null)
             {
                 return NotFound();
 
             }
             else
             {
-                Provider = Provider;
+                Provider = provider;
             }
             return Page();
         }
@@ -44,9 +44,9 @@ namespace SupermarketWEB.Pages.Providers
 			{
 				return NotFound();
 			}
-            var Provider = await _context.Providers.FindAsync(id);
-            if (Provider != null) {
-                Provider = Provider;
+            var provider = await _context.Providers.FindAsync(id);
+            if (provider != null) {
+                Provider = provider;
                 _context.Providers.Remove(Provider);
                 await _context.SaveChangesAsync();
             }

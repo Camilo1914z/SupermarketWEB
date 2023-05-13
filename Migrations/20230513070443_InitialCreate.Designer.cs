@@ -12,7 +12,7 @@ using SupermarketWEB.Data;
 namespace SupermarketWEB.Migrations
 {
     [DbContext(typeof(SupermarketContext))]
-    [Migration("20230510045847_InitialCreate")]
+    [Migration("20230513070443_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,6 +24,21 @@ namespace SupermarketWEB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CategoryProduct", b =>
+                {
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("categoriesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductsId", "categoriesId");
+
+                    b.HasIndex("categoriesId");
+
+                    b.ToTable("CategoryProduct");
+                });
 
             modelBuilder.Entity("SupermarketWEB.Models.Category", b =>
                 {
@@ -45,31 +60,6 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Detail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("InvoicedId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Details");
-                });
-
             modelBuilder.Entity("SupermarketWEB.Models.Invoice", b =>
                 {
                     b.Property<int>("Id")
@@ -81,9 +71,6 @@ namespace SupermarketWEB.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DetailId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
@@ -94,8 +81,6 @@ namespace SupermarketWEB.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DetailId");
 
                     b.ToTable("Invoices");
                 });
@@ -147,14 +132,12 @@ namespace SupermarketWEB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(8,2)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -178,7 +161,7 @@ namespace SupermarketWEB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Frist_Name")
+                    b.Property<string>("First_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -200,11 +183,83 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("Providers");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Invoice", b =>
+            modelBuilder.Entity("SupermarketWEB.Models.Purchase", b =>
                 {
-                    b.HasOne("SupermarketWEB.Models.Detail", null)
-                        .WithMany("Invoices")
-                        .HasForeignKey("DetailId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProviderId");
+
+                    b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("SupermarketWEB.Models.Sale", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SaleDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProviderId");
+
+                    b.ToTable("Sales");
+                });
+
+            modelBuilder.Entity("CategoryProduct", b =>
+                {
+                    b.HasOne("SupermarketWEB.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupermarketWEB.Models.Category", null)
+                        .WithMany()
+                        .HasForeignKey("categoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SupermarketWEB.Models.PayMode", b =>
@@ -218,17 +273,6 @@ namespace SupermarketWEB.Migrations
                         .HasForeignKey("PayModeId");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Product", b =>
-                {
-                    b.HasOne("SupermarketWEB.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("SupermarketWEB.Models.Provider", b =>
                 {
                     b.HasOne("SupermarketWEB.Models.Provider", null)
@@ -236,14 +280,42 @@ namespace SupermarketWEB.Migrations
                         .HasForeignKey("ProviderId");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Category", b =>
+            modelBuilder.Entity("SupermarketWEB.Models.Purchase", b =>
                 {
-                    b.Navigation("Products");
+                    b.HasOne("SupermarketWEB.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupermarketWEB.Models.Provider", "Provider")
+                        .WithMany()
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Provider");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Detail", b =>
+            modelBuilder.Entity("SupermarketWEB.Models.Sale", b =>
                 {
-                    b.Navigation("Invoices");
+                    b.HasOne("SupermarketWEB.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupermarketWEB.Models.Provider", "Provider")
+                        .WithMany()
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Provider");
                 });
 
             modelBuilder.Entity("SupermarketWEB.Models.Invoice", b =>

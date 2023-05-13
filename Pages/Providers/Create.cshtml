@@ -15,42 +15,46 @@
 				<input asp-for="Provider.Document_Number" class="form.control"/>
 				<span asp-validation-for="Provider.Document_Number" class="text-danger"></span>
 			</div>
-			<div class = "from group">
-				<label asp-for="Provider.First_Name" class="control-label" ></label>
-				<input asp-for="Provider.First_Name" class="form.control"/>
-				<span asp-validation-for="Provider.First_Name" class="text-danger"></span>
-			</div>
-			<div class = "from group">
-				<label asp-for="Provider.Last_Name" class="control-label" ></label>
-				<input asp-for="Provider.Last_Name" class="form.control"/>
-				<span asp-validation-for="Provider.Last_Name" class="text-danger"></span>
-			</div>
-			<div class = "from group">
-				<label asp-for="Provider.Phone" class="control-label" ></label>
-				<input asp-for="Provider.Phone" class="form.control"/>
-				<span asp-validation-for="Provider.Phone" class="text-danger"></span>
-			</div>
-			<div class = "from group">
-				<label asp-for="Provider.Email" class="control-label" ></label>
-				<input asp-for="Provider.Email" class="form.control"/>
-				<span asp-validation-for="Provider.Email" class="text-danger"></span>
-			</div>
-				<div class = "from group">
-				<label asp-for="Provider.Birhtday" class="control-label" ></label>
-				<input asp-for="Provider.Birhtday" class="form.control"/>
-				<span asp-validation-for="Provider.Birhtday" class="text-danger"></span>
-			</div>
-			<div class="from-group  mt-3">
-				<input type="submit" value="Create" class="btn btn-success"/>
-				<a asp-page="Index" class="btn btn-primary">Back to list</a>
-			</div>
-		</form>
-	</div>
+             <div cite="form-grup">
+                <label asp-for="Provider.Last_Name" class="control-label"></label>
+                <input asp-for="Provider.Last_Name" class="form-control" />
+
+                <label asp-for="Provider.Document_Number" class="control-label"></label>
+                <input asp-for="Provider.Document_Number" class="form-control" />
+
+             
+                <label asp-for="Provider.Birhtday" class="control-label"></label>
+                <input asp-for="Provider.Birhtday" class="form-control" />
+
+                <label asp-for="Provider.Email" class="control-label"></label>
+                <input asp-for="Provider.Email" class="form-control" />
+
+                <label asp-for="Provider.Phone" class="control-label"></label>
+                <input asp-for="Provider.Phone" class="form-control" />
+
+
+
+                <span asp-validation-for="Provider. Last_Name" class="text-danger"></span>
+
+                <span asp-validation-for="Provider. Document_Number" class="text-danger"></span>
+
+                <span asp-validation-for="Provider. Birhtday" class="text-danger"></span>
+
+                <span asp-validation-for="Provider. Phone" class="text-danger"></span>
+
+
+            </div>
+            <div class="form-grup mt-3 ">
+                <input type="submit" value="Create" class="btn btn-success" />
+                <a asp-page="Index" class="btn btn-primary">Back to list </a>
+            </div>
+        </form>
+    </div>
 </div>
 
-@section Scripts{
-	@{
-		await Html.RenderPartialAsync("_validationScriptsPartial");
-	}
 
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -26,15 +26,15 @@ namespace SupermarketWEB.Pages.PayModes
 
                 return NotFound();
             }
-            var PayMode = await _context.PayModes.FirstOrDefaultAsync(m => m.Id == id);
-            if (PayMode == null)
+            var payMode = await _context.PayModes.FirstOrDefaultAsync(m => m.Id == id);
+            if (payMode == null)
             {
                 return NotFound();
 
             }
             else
             {
-                PayMode = PayMode;
+                PayMode = payMode;
             }
             return Page();
         }
@@ -44,9 +44,9 @@ namespace SupermarketWEB.Pages.PayModes
 			{
 				return NotFound();
 			}
-            var PayMode = await _context.PayModes.FindAsync(id);
-            if (PayMode != null) {
-                PayMode = PayMode;
+            var payMode = await _context.PayModes.FindAsync(id);
+            if (payMode != null) {
+                PayMode = payMode;
                 _context.PayModes.Remove(PayMode);
                 await _context.SaveChangesAsync();
             }
