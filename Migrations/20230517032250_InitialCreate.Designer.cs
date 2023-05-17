@@ -12,7 +12,7 @@ using SupermarketWEB.Data;
 namespace SupermarketWEB.Migrations
 {
     [DbContext(typeof(SupermarketContext))]
-    [Migration("20230513070443_InitialCreate")]
+    [Migration("20230517032250_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

@@ -1,6 +1,8 @@
-﻿namespace SupermarketWEB.Models
+﻿
+namespace SupermarketWEB.Models
 {
-    public class Invoice
+	
+	public class Invoice
     {
 
         public int Id { get; set; }
