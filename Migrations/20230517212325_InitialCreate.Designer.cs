@@ -12,7 +12,7 @@ using SupermarketWEB.Data;
 namespace SupermarketWEB.Migrations
 {
     [DbContext(typeof(SupermarketContext))]
-    [Migration("20230517032250_InitialCreate")]
+    [Migration("20230517212325_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -215,6 +215,36 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("Purchases");
                 });
 
+            modelBuilder.Entity("SupermarketWEB.Models.Register", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RegisterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegisterId");
+
+                    b.ToTable("Register");
+                });
+
             modelBuilder.Entity("SupermarketWEB.Models.Sale", b =>
                 {
                     b.Property<int>("Id")
@@ -299,6 +329,13 @@ namespace SupermarketWEB.Migrations
                     b.Navigation("Provider");
                 });
 
+            modelBuilder.Entity("SupermarketWEB.Models.Register", b =>
+                {
+                    b.HasOne("SupermarketWEB.Models.Register", null)
+                        .WithMany("Registers")
+                        .HasForeignKey("RegisterId");
+                });
+
             modelBuilder.Entity("SupermarketWEB.Models.Sale", b =>
                 {
                     b.HasOne("SupermarketWEB.Models.Product", "Product")
@@ -331,6 +368,11 @@ namespace SupermarketWEB.Migrations
             modelBuilder.Entity("SupermarketWEB.Models.Provider", b =>
                 {
                     b.Navigation("Providers");
+                });
+
+            modelBuilder.Entity("SupermarketWEB.Models.Register", b =>
+                {
+                    b.Navigation("Registers");
                 });
 #pragma warning restore 612, 618
         }

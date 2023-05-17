@@ -30,12 +30,9 @@ namespace SupermarketWEB.Pages.Account
 
                 var identify =  new ClaimsIdentity(claims, "MyCookieAuth");
                 ClaimsPrincipal claimsPrincipal= new ClaimsPrincipal(identify);
+
+
                 await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal);
-
-
-
-
-
                 return RedirectToPage("/Index");
 
             }

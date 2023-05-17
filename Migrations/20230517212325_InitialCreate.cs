@@ -82,6 +82,27 @@ namespace SupermarketWEB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Register",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegisterId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Register", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Register_Register_RegisterId",
+                        column: x => x.RegisterId,
+                        principalTable: "Register",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PayModes",
                 columns: table => new
                 {
@@ -220,6 +241,11 @@ namespace SupermarketWEB.Migrations
                 column: "ProviderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Register_RegisterId",
+                table: "Register",
+                column: "RegisterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sales_ProductId",
                 table: "Sales",
                 column: "ProductId");
@@ -241,6 +267,9 @@ namespace SupermarketWEB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Purchases");
+
+            migrationBuilder.DropTable(
+                name: "Register");
 
             migrationBuilder.DropTable(
                 name: "Sales");
