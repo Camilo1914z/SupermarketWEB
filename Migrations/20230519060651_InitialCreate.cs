@@ -82,23 +82,22 @@ namespace SupermarketWEB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Register",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RegisterId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Register", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Register_Register_RegisterId",
-                        column: x => x.RegisterId,
-                        principalTable: "Register",
+                        name: "FK_Users_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -241,11 +240,6 @@ namespace SupermarketWEB.Migrations
                 column: "ProviderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Register_RegisterId",
-                table: "Register",
-                column: "RegisterId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Sales_ProductId",
                 table: "Sales",
                 column: "ProductId");
@@ -254,6 +248,11 @@ namespace SupermarketWEB.Migrations
                 name: "IX_Sales_ProviderId",
                 table: "Sales",
                 column: "ProviderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserId",
+                table: "Users",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -269,10 +268,10 @@ namespace SupermarketWEB.Migrations
                 name: "Purchases");
 
             migrationBuilder.DropTable(
-                name: "Register");
+                name: "Sales");
 
             migrationBuilder.DropTable(
-                name: "Sales");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Categories");

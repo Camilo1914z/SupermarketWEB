@@ -12,7 +12,7 @@ using SupermarketWEB.Data;
 namespace SupermarketWEB.Migrations
 {
     [DbContext(typeof(SupermarketContext))]
-    [Migration("20230517212325_InitialCreate")]
+    [Migration("20230519060651_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -215,36 +215,6 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("Purchases");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Register", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RegisterId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegisterId");
-
-                    b.ToTable("Register");
-                });
-
             modelBuilder.Entity("SupermarketWEB.Models.Sale", b =>
                 {
                     b.Property<int>("Id")
@@ -275,6 +245,32 @@ namespace SupermarketWEB.Migrations
                     b.HasIndex("ProviderId");
 
                     b.ToTable("Sales");
+                });
+
+            modelBuilder.Entity("SupermarketWEB.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CategoryProduct", b =>
@@ -329,13 +325,6 @@ namespace SupermarketWEB.Migrations
                     b.Navigation("Provider");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Register", b =>
-                {
-                    b.HasOne("SupermarketWEB.Models.Register", null)
-                        .WithMany("Registers")
-                        .HasForeignKey("RegisterId");
-                });
-
             modelBuilder.Entity("SupermarketWEB.Models.Sale", b =>
                 {
                     b.HasOne("SupermarketWEB.Models.Product", "Product")
@@ -355,6 +344,13 @@ namespace SupermarketWEB.Migrations
                     b.Navigation("Provider");
                 });
 
+            modelBuilder.Entity("SupermarketWEB.Models.User", b =>
+                {
+                    b.HasOne("SupermarketWEB.Models.User", null)
+                        .WithMany("Users")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("SupermarketWEB.Models.Invoice", b =>
                 {
                     b.Navigation("PayModes");
@@ -370,9 +366,9 @@ namespace SupermarketWEB.Migrations
                     b.Navigation("Providers");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Register", b =>
+            modelBuilder.Entity("SupermarketWEB.Models.User", b =>
                 {
-                    b.Navigation("Registers");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
