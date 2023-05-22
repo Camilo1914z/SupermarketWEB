@@ -12,7 +12,7 @@ using SupermarketWEB.Data;
 namespace SupermarketWEB.Migrations
 {
     [DbContext(typeof(SupermarketContext))]
-    [Migration("20230519060651_InitialCreate")]
+    [Migration("20230521212953_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -38,6 +38,21 @@ namespace SupermarketWEB.Migrations
                     b.HasIndex("categoriesId");
 
                     b.ToTable("CategoryProduct");
+                });
+
+            modelBuilder.Entity("RegisterUser", b =>
+                {
+                    b.Property<int>("RegistersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RegistersId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RegisterUser");
                 });
 
             modelBuilder.Entity("SupermarketWEB.Models.Category", b =>
@@ -215,6 +230,27 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("Purchases");
                 });
 
+            modelBuilder.Entity("SupermarketWEB.Models.Register", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Registers");
+                });
+
             modelBuilder.Entity("SupermarketWEB.Models.Sale", b =>
                 {
                     b.Property<int>("Id")
@@ -263,12 +299,7 @@ namespace SupermarketWEB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Users");
                 });
@@ -284,6 +315,21 @@ namespace SupermarketWEB.Migrations
                     b.HasOne("SupermarketWEB.Models.Category", null)
                         .WithMany()
                         .HasForeignKey("categoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RegisterUser", b =>
+                {
+                    b.HasOne("SupermarketWEB.Models.Register", null)
+                        .WithMany()
+                        .HasForeignKey("RegistersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupermarketWEB.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -344,13 +390,6 @@ namespace SupermarketWEB.Migrations
                     b.Navigation("Provider");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.User", b =>
-                {
-                    b.HasOne("SupermarketWEB.Models.User", null)
-                        .WithMany("Users")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("SupermarketWEB.Models.Invoice", b =>
                 {
                     b.Navigation("PayModes");
@@ -364,11 +403,6 @@ namespace SupermarketWEB.Migrations
             modelBuilder.Entity("SupermarketWEB.Models.Provider", b =>
                 {
                     b.Navigation("Providers");
-                });
-
-            modelBuilder.Entity("SupermarketWEB.Models.User", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

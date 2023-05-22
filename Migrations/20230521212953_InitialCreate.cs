@@ -82,23 +82,31 @@ namespace SupermarketWEB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Registers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Registers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +217,30 @@ namespace SupermarketWEB.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RegisterUser",
+                columns: table => new
+                {
+                    RegistersId = table.Column<int>(type: "int", nullable: false),
+                    UsersId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegisterUser", x => new { x.RegistersId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_RegisterUser_Registers_RegistersId",
+                        column: x => x.RegistersId,
+                        principalTable: "Registers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RegisterUser_Users_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryProduct_categoriesId",
                 table: "CategoryProduct",
@@ -240,6 +272,11 @@ namespace SupermarketWEB.Migrations
                 column: "ProviderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RegisterUser_UsersId",
+                table: "RegisterUser",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sales_ProductId",
                 table: "Sales",
                 column: "ProductId");
@@ -248,11 +285,6 @@ namespace SupermarketWEB.Migrations
                 name: "IX_Sales_ProviderId",
                 table: "Sales",
                 column: "ProviderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UserId",
-                table: "Users",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -268,16 +300,22 @@ namespace SupermarketWEB.Migrations
                 name: "Purchases");
 
             migrationBuilder.DropTable(
-                name: "Sales");
+                name: "RegisterUser");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Sales");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Invoices");
+
+            migrationBuilder.DropTable(
+                name: "Registers");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Products");

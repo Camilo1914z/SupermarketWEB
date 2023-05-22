@@ -15,7 +15,7 @@ namespace SupermarketWEB
 			builder.Services.AddAuthentication().AddCookie("MyCookieAuth", option => {
 
 				option.Cookie.Name = "MyCookieAuth";
-				option.LoginPath = "/Account/Login";
+				option.LoginPath = "/Account/Create";
 
 
 

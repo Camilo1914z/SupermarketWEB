@@ -2,7 +2,7 @@
 
 namespace SupermarketWEB.Models
 {
-	public class User
+	public class Register
 	{
 		public int Id { get; set; }
 
@@ -12,8 +12,6 @@ namespace SupermarketWEB.Models
 		[Required]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
-		public ICollection<Register>? Registers { get; set; } = default!;
-
-
+		public ICollection<User>? Users { get; set; } = default!;
 	}
 }

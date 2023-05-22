@@ -22,17 +22,17 @@ namespace SupermarketWEB.Pages.Account
 
 		[BindProperty]
 
-		public User User { get; set; } = default!;
+		public Register Register { get; set; } = default!;
 		public async Task<IActionResult> OnPostAsync()
 		{
-			if (!ModelState.IsValid || _context.Users == null || User == null)
+			if (!ModelState.IsValid || _context.Registers == null || Register == null)
 			{
 
 				return Page();
 			}
-			_context.Users.Add(User);
+			_context.Registers.Add(Register);
 			await _context.SaveChangesAsync();
-			return RedirectToPage("./Login");
+			return RedirectToPage("/Account/Login");
 
 		}
 	}
